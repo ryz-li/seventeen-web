@@ -1,0 +1,44 @@
+#svt_vue
+server:
+  port: 10011
+spring:
+  datasource:
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      datasource:
+        master:
+          url: jdbc:mysql://localhost:3306/svt_web
+          type: com.alibaba.druid.pool.DruidDataSource
+          username: root
+          password: P@ssw0rd
+          driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: update
+      # Naming strategy
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      # stripped before adding them to the entity manager)
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    open-in-view: true
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.seventeen.web.**.dao
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#分页
+#pagehelper分页插件
+pagehelper:
+  helperDialect: mysql          #分页插件会自动检测当前的数据库链接，自动选择合适的分页方式。
+  reasonable: true              #分页合理化参数，默认值为false。
+  supportMethodsArguments: true #支持通过 Mapper 接口参数来传递分页参数，默认值false
+  params: count=countSql        #增加了该参数来配置参数映射，用于从对象中根据属性名取值。
+
+logging:
+  level:
+    ssm.app.mapper : debug
